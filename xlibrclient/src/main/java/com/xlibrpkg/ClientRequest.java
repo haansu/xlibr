@@ -1,19 +1,13 @@
 package com.xlibrpkg;
 
-public class ClientRequest {
+import java.io.Serializable;
+
+public class ClientRequest implements Serializable {
 
 	public enum RequestType{
 		LOGIN, SIGNUP
 	}
 
-	RequestType requestType;
-
-	public RequestType getRequestType() {
-		return requestType;
-	}
-
-	public void setRequestType(RequestType requestType) {
-		this.requestType = requestType;
-	}
+	public RequestType value;
 
 }

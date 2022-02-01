@@ -19,7 +19,7 @@ public class Main {
 
 		try {
 			XLibrconnect xlibrconnect = new XLibrconnect(PORT);
-			System.out.println("Connected!");
+			System.out.println("Success!");
 			executor.submit(xlibrconnect);
 		} catch (Exception e) {
 			e.printStackTrace();

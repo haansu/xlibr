@@ -54,8 +54,8 @@ public class XLibrconnect {
 			System.out.println("Sending object to server!");
 			objOutputStr.writeObject(_object);
 
-		} catch (IOException exp) {
-			exp.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 

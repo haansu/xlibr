@@ -1,10 +1,9 @@
 package com.xlibrpkg;
 
 import jakarta.xml.bind.DatatypeConverter;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.security.MessageDigest;
+import com.xlibrpkg.ClientRequest;
 
 public class Main {
 
@@ -22,7 +21,7 @@ public class Main {
 		return hashValue;
 	}
 
-	static public void main(String[] args) throws IOException {
+	static public void main(String[] args) {
 
 		UserData userData = new UserData();
 		userData.setUsername("TheDoctor");
@@ -34,10 +33,15 @@ public class Main {
 		String hashedPass = GetHash(password.getBytes(), "SHA-256");
 		userData.setPassword(hashedPass);
 
-		System.out.println(userData.toString());
+		System.out.println(userData);
+
+		ClientRequest request = new ClientRequest();
+		request.value = ClientRequest.RequestType.LOGIN;
+
 
 		try {
 			XLibrconnect xlibrconnect = new XLibrconnect("localhost", 23313);
+			xlibrconnect.SendObject(request);
 			xlibrconnect.SendObject(userData);
 		} catch (Exception exp) {
 			System.out.println("Unable to connect to the server!");

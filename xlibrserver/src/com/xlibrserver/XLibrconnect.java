@@ -1,12 +1,16 @@
 package com.xlibrserver;
 
 import java.io.*;
+import java.lang.invoke.VarHandle;
 import java.net.*;
+
+import com.mysql.cj.xdevapi.Client;
 import com.xlibrpkg.UserData;
+import com.xlibrpkg.ClientRequest;
 
 public class XLibrconnect implements Runnable {
 
-	private ServerSocket		serverSocket;
+	private ServerSocket serverSocket;
 
 	InputStreamReader	inputStrRd;
 	BufferedReader		buffReader;
@@ -39,11 +43,11 @@ public class XLibrconnect implements Runnable {
 			objInputStr = new ObjectInputStream(inputStr);
 			receivedObj = (T) objInputStr.readObject();
 
-		} catch (IOException exp) {
-			exp.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 			return null;
-		} catch (ClassNotFoundException exp) {
-			exp.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 			return null;
 		}
 
@@ -60,7 +64,7 @@ public class XLibrconnect implements Runnable {
 	}
 
 	private void accept() throws IOException {
-		System.out.println("Accepting connection.");
+		System.out.println("Waiting for connection!");
 
 		while(!Thread.interrupted()) {
 			try (Socket socket = serverSocket.accept()) {
@@ -74,20 +78,31 @@ public class XLibrconnect implements Runnable {
 				printWr.println("Connected!");
 				printWr.flush();
 
-				PrintReceivedObject(socket);
+				DataRouter(socket);
 			} catch (SocketTimeoutException e) { }
 		}
 	}
 
-	public void PrintReceivedObject(Socket socket) {
+	public void DataRouter(Socket socket) {
+
+		var receivedRequest = ReceiveObject(socket);
+		if (receivedRequest instanceof ClientRequest) {
+			System.out.print("Client request: ");
+			ClientRequest request = (ClientRequest) receivedRequest;
+			if (request.value == ClientRequest.RequestType.LOGIN)
+				System.out.print("Login;\n");
+			else if (request.value == ClientRequest.RequestType.SIGNUP)
+				System.out.print("Signup;\n");
+		}
+
 		var receivedObject = ReceiveObject(socket);
 
 		if (receivedObject instanceof UserData) {
-			System.out.println("Received 'UserData' object");
+			System.out.println("Received 'UserData': ");
 			userData = (UserData) receivedObject;
+			receivedObject = null;
 		}
 
 		System.out.println(userData);
-
 	}
 }
