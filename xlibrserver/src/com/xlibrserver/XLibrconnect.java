@@ -1,16 +1,15 @@
 package com.xlibrserver;
 
 import java.io.*;
-import java.lang.invoke.VarHandle;
 import java.net.*;
 
-import com.mysql.cj.xdevapi.Client;
+import com.xlibrpkg.Log;
 import com.xlibrpkg.UserData;
 import com.xlibrpkg.ClientRequest;
 
 public class XLibrconnect implements Runnable {
 
-	private ServerSocket serverSocket;
+	ServerSocket		serverSocket;
 
 	InputStreamReader	inputStrRd;
 	BufferedReader		buffReader;
@@ -64,7 +63,7 @@ public class XLibrconnect implements Runnable {
 	}
 
 	private void accept() throws IOException {
-		System.out.println("Waiting for connection!");
+		Log.INFO("Waiting for connection");
 
 		while(!Thread.interrupted()) {
 			try (Socket socket = serverSocket.accept()) {
@@ -72,7 +71,7 @@ public class XLibrconnect implements Runnable {
 				buffReader = new BufferedReader(inputStrRd);
 
 				buffPrint = buffReader.readLine();
-				System.out.println("Client: " + buffPrint);
+				Log.INFO("Client - " + buffPrint);
 
 				printWr = new PrintWriter(socket.getOutputStream());
 				printWr.println("Connected!");
@@ -84,25 +83,42 @@ public class XLibrconnect implements Runnable {
 	}
 
 	public void DataRouter(Socket socket) {
-
 		var receivedRequest = ReceiveObject(socket);
+
 		if (receivedRequest instanceof ClientRequest) {
-			System.out.print("Client request: ");
 			ClientRequest request = (ClientRequest) receivedRequest;
-			if (request.value == ClientRequest.RequestType.LOGIN)
-				System.out.print("Login;\n");
-			else if (request.value == ClientRequest.RequestType.SIGNUP)
-				System.out.print("Signup;\n");
+
+			switch (request.value) {
+				case LOGIN: {
+					Log.INFO(socket.getInetAddress().toString().substring(1) + " requested LOGIN!");
+
+					var receivedData = ReceiveObject(socket);
+					UserData loginData = (UserData) receivedData;
+					Login(loginData);
+
+					break;
+				}
+
+				case SIGNUP: {
+					Log.INFO(socket.getInetAddress().toString().substring(1) + " requested SIGNUP!");
+
+					var receivedData = ReceiveObject(socket);
+					UserData signupData = (UserData) receivedData;
+					SignUp(signupData);
+
+					break;
+				}
+
+			}
 		}
 
-		var receivedObject = ReceiveObject(socket);
+	}
 
-		if (receivedObject instanceof UserData) {
-			System.out.println("Received 'UserData': ");
-			userData = (UserData) receivedObject;
-			receivedObject = null;
-		}
+	private void Login(UserData loginData) {
 
-		System.out.println(userData);
+	}
+
+	private void SignUp(UserData signupData) {
+
 	}
 }

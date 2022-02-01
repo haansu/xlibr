@@ -5,6 +5,8 @@ import jakarta.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 import com.xlibrpkg.ClientRequest;
 
+import static com.xlibrpkg.ClientRequest.RequestType.LOGIN;
+
 public class Main {
 
 	static public String GetHash(byte[] _input, String _algorithm) {
@@ -22,6 +24,7 @@ public class Main {
 	}
 
 	static public void main(String[] args) {
+		Log.getInstance();
 
 		UserData userData = new UserData();
 		userData.setUsername("TheDoctor");
@@ -36,7 +39,7 @@ public class Main {
 		System.out.println(userData);
 
 		ClientRequest request = new ClientRequest();
-		request.value = ClientRequest.RequestType.LOGIN;
+		request.value = LOGIN;
 
 
 		try {
@@ -44,7 +47,7 @@ public class Main {
 			xlibrconnect.SendObject(request);
 			xlibrconnect.SendObject(userData);
 		} catch (Exception exp) {
-			System.out.println("Unable to connect to the server!");
+			Log.CRITICAL("Unable to connect to server!");
 		}
 	}
 

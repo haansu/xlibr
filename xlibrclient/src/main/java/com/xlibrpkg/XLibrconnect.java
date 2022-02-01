@@ -31,18 +31,18 @@ public class XLibrconnect {
 			ip = InetAddress.getLocalHost();
 		} catch (UnknownHostException exp) {
 			exp.printStackTrace();
-			System.out.println("Unable to get localhost ip address!");
+			Log.ERROR("Unable to get localhost ip address!");
 		}
 
 		printWr = new PrintWriter(clientSocket.getOutputStream());
-		printWr.println("\"" + ip.toString() + "\" has connected!");
+		printWr.println("Connected!");
 		printWr.flush();
 
 		inputStr	= new InputStreamReader(clientSocket.getInputStream());
 		buffReader	= new BufferedReader(inputStr);
 
 		buffPrint	= buffReader.readLine();
-		System.out.println("Server: " + buffPrint);
+		Log.INFO("Server - " + buffPrint);
 
 	}
 
@@ -51,7 +51,7 @@ public class XLibrconnect {
 			outputStr = clientSocket.getOutputStream();
 			objOutputStr = new ObjectOutputStream(outputStr);
 
-			System.out.println("Sending object to server!");
+			Log.INFO("Sending object to server!");
 			objOutputStr.writeObject(_object);
 
 		} catch (IOException e) {
