@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="xlibr">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../xlibr" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../xlibr/src/main/java" />
+    </SOURCES>
+  </library>
+</component>
