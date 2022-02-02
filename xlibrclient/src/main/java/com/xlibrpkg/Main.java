@@ -6,6 +6,8 @@ import java.security.MessageDigest;
 import com.xlibrpkg.ClientRequest;
 
 import static com.xlibrpkg.ClientRequest.RequestType.LOGIN;
+import static com.xlibrpkg.ClientRequest.RequestType.SIGNUP;
+import static com.xlibrpkg.ClientRequest.RequestType.CLOSECONNECTION;
 
 public class Main {
 
@@ -41,11 +43,16 @@ public class Main {
 		ClientRequest request = new ClientRequest();
 		request.value = LOGIN;
 
-
 		try {
 			XLibrconnect xlibrconnect = new XLibrconnect("localhost", 23313);
 			xlibrconnect.SendObject(request);
 			xlibrconnect.SendObject(userData);
+			request.value = SIGNUP;
+			xlibrconnect.SendObject(request);
+			xlibrconnect.SendObject(userData);
+			request.value = CLOSECONNECTION;
+			xlibrconnect.SendObject(request);
+
 		} catch (Exception exp) {
 			Log.CRITICAL("Unable to connect to server!");
 		}
