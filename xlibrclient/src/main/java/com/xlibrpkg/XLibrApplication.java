@@ -1,17 +1,23 @@
 package com.xlibrpkg;
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 import jakarta.xml.bind.DatatypeConverter;
-
 import java.security.MessageDigest;
-import com.xlibrpkg.ClientRequest;
+import java.util.Objects;
 
-import static com.xlibrpkg.ClientRequest.RequestType.LOGIN;
-import static com.xlibrpkg.ClientRequest.RequestType.SIGNUP;
-import static com.xlibrpkg.ClientRequest.RequestType.CLOSECONNECTION;
+import static com.xlibrpkg.ClientRequest.RequestType.*;
 
-public class Main {
 
-	static public String GetHash(byte[] _input, String _algorithm) {
+public class XLibrApplication extends Application {
+
+	static public Stage mainStage;
+
+	public static String GetHash(byte[] _input, String _algorithm) {
 		String hashValue = "";
 		try {
 			MessageDigest messageDigest = MessageDigest.getInstance(_algorithm);
@@ -25,7 +31,20 @@ public class Main {
 		return hashValue;
 	}
 
-	static public void main(String[] args) {
+	public static void main(String[] args) {launch(args);}
+
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		Log.getInstance();
+		Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login-view.fxml")));
+		mainStage = primaryStage;
+		mainStage.setTitle("XLibr Login");
+		mainStage.setScene(new Scene(root));
+		mainStage.setResizable(false);
+		mainStage.show();
+	}
+
+	private void xStart() {
 		Log.getInstance();
 
 		UserData userData = new UserData();
@@ -43,6 +62,8 @@ public class Main {
 		ClientRequest request = new ClientRequest();
 		request.value = LOGIN;
 
+		XLibrApplication app = new XLibrApplication();
+
 		try {
 			XLibrconnect xlibrconnect = new XLibrconnect("localhost", 23313);
 			xlibrconnect.SendObject(request);
@@ -57,7 +78,4 @@ public class Main {
 			Log.CRITICAL("Unable to connect to server!");
 		}
 	}
-
-
-
 }

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.xlibrpkg.XLibrController">
+   <children>
+      <MenuBar layoutY="2.0" prefWidth="1000.0" style="-fx-background-color: #fff;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <AnchorPane layoutY="25.0" prefHeight="0.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="25.0">
+         <children>
+            <FlowPane layoutY="148.0" orientation="VERTICAL" prefHeight="575.0" prefWidth="200.0" style="-fx-background-color: #333;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Button" />
+                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Button" />
+                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Button" />
+                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Button" />
+                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Button" />
+                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Button" />
+                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Button" />
+                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Button" />
+                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Button" />
+               </children>
+            </FlowPane>
+            <Button layoutY="525.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Button" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #999;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0" />
+   </children>
+</AnchorPane>

@@ -23,33 +23,33 @@ public class Log {
 
 	public static void INFO(String text) {
 		LocalDateTime time = LocalDateTime.now();
-		System.out.println(format.format(time) + CYAN + "  INFO:\t\t" + RESET + text);
+		System.out.println(format.format(time) + CYAN + "|INFO:\t\t" + RESET + text);
 	}
 
 	public static void WARN(String text) {
 		LocalDateTime time = LocalDateTime.now();
-		System.out.println(format.format(time) + YELLOW + "  WARNING:\t" + RESET + text);
+		System.out.println(format.format(time) + YELLOW + "|WARNING:\t" + RESET + text);
 	}
 
 
 	public static void ERROR(String text) {
 		LocalDateTime time = LocalDateTime.now();
-		System.out.println(format.format(time) + RED + "  ERROR:\t\t" + RESET + text);
+		System.out.println(format.format(time) + RED + "|ERROR:\t\t" + RESET + text);
 	}
 
 	public static void CRITICAL(String text) {
 		LocalDateTime time = LocalDateTime.now();
-		System.out.println(format.format(time) + PURPLE + "  CRITICAL:\t" + RESET + text);
+		System.out.println(format.format(time) + PURPLE + "|CRITICAL:\t" + RESET + text);
 	}
 
 	public static void SUCCESS(String text) {
 		LocalDateTime time = LocalDateTime.now();
-		System.out.println(format.format(time) + GREEN + "  SUCCESS:\t" + RESET + text);
+		System.out.println(format.format(time) + GREEN + "|SUCCESS:\t" + RESET + text);
 	}
 
 	public static void NOTE(String text) {
 		LocalDateTime time = LocalDateTime.now();
-		System.out.println(format.format(time) + BLUE + "  NOTE:\t\t" + RESET + text);
+		System.out.println(format.format(time) + BLUE + "|NOTE:\t\t" + RESET + text);
 	}
 
 	public static Log getInstance() {

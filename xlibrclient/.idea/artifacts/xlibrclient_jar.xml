@@ -1,0 +1,36 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="xlibrclient:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/xlibrclient_jar</output-path>
+    <root id="archive" name="xlibrclient.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="xlibrclient" />
+      <element id="library" level="project" name="javafx-sdk-17.0" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/17.0.0.1/javafx-controls-17.0.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/jakarta/xml/bind/jakarta.xml.bind-api/3.0.0/jakarta.xml.bind-api-3.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/17.0.0.1/javafx-graphics-17.0.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/sun/xml/bind/jaxb-impl/3.0.0/jaxb-impl-3.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/sun/activation/jakarta.activation/2.0.0/jakarta.activation-2.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/17.0.0.1/javafx-fxml-17.0.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/17.0.0.1/javafx-graphics-17.0.0.1-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/17.0.0.1/javafx-base-17.0.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/sun/xml/bind/jaxb-core/3.0.0/jaxb-core-3.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/17.0.0.1/javafx-base-17.0.0.1-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/17.0.0.1/javafx-controls-17.0.0.1-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/17.0.0.1/javafx-fxml-17.0.0.1-win.jar" path-in-jar="/" />
+      <element id="library" level="project" name="Maven: com.sun.activation:jakarta.activation:2.0.0" />
+      <element id="library" level="project" name="Maven: com.sun.xml.bind:jaxb-core:3.0.0" />
+      <element id="library" level="project" name="Maven: com.sun.xml.bind:jaxb-impl:3.0.0" />
+      <element id="library" level="project" name="Maven: jakarta.xml.bind:jakarta.xml.bind-api:3.0.0" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:17.0.0.1" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:win:17.0.0.1" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:17.0.0.1" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:win:17.0.0.1" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:17.0.0.1" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:win:17.0.0.1" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:17.0.0.1" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:win:17.0.0.1" />
+    </root>
+  </artifact>
+</component>
