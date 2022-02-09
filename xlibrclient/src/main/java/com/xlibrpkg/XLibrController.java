@@ -10,34 +10,41 @@ import javafx.scene.control.TextField;
 
 import java.util.Objects;
 
+import static com.xlibrpkg.ClientRequest.RequestType.*;
+
 public class XLibrController {
+
+	static public XLibrConnect s_Xlibrconnect;
+	static public ClientRequest s_Request;
+
 	@FXML
 	private TextField usernameField;
 	@FXML
 	private PasswordField passwordField;
 
 	@FXML
-	public void LoginButton(ActionEvent actionEvent) {
+	public void LoginButton(ActionEvent _actionEvent) {
 		String userText = usernameField.getText();
 		String passText = passwordField.getText();
-		Log.INFO(userText);
-		Log.INFO(passText);
-		try {
-			OpenMainStage();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		Log.INFO("Username - " + userText);
+		Log.INFO("Password - " + XLibrApplication.GetHash(passText.getBytes(), "Sha-256"));
+		if (Login(userText, passText))
+			try {
+				OpenMainStage();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 	}
 
 	@FXML
-	public void SignupSwitch(ActionEvent actionEvent) throws Exception {
+	public void SignupSwitch(ActionEvent _actionEvent) throws Exception {
 		Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("signup-view.fxml")));
 		XLibrApplication.mainStage.setTitle("XLibr Signup");
 		XLibrApplication.mainStage.setScene(new Scene(root));
 	}
 
 	@FXML
-	public void LoginSwitch(ActionEvent actionEvent) throws Exception {
+	public void LoginSwitch(ActionEvent _actionEvent) throws Exception {
 		Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login-view.fxml")));
 		XLibrApplication.mainStage.setTitle("XLibr Login");
 		XLibrApplication.mainStage.setScene(new Scene(root));
@@ -52,14 +59,38 @@ public class XLibrController {
 		XLibrApplication.mainStage.setScene(new Scene(root));
 	}
 
-	private boolean Login() {
+	private boolean Login(String _username, String _password) {
+		if (_username.equals("") || _password.equals(""))
+			return false;
 
+		Log.getInstance();
+		s_Request = new ClientRequest();
+		s_Request.value = LOGIN;
+
+		UserData userData = new UserData();
+
+		userData.setUsername(_username);
+		String hashedPass = XLibrApplication.GetHash(_password.getBytes(), "SHA-256");
+		userData.setPassword(hashedPass);
+
+		Log.INFO(userData.toString());
+
+		try {
+			s_Xlibrconnect = new XLibrConnect(XLibrApplication.IP, XLibrApplication.PORT);
+			s_Xlibrconnect.SendObject(s_Request);
+			s_Xlibrconnect.SendObject(userData);
+		} catch (Exception e) {
+			Log.CRITICAL("Unable to connect to server!");
+			return false;
+		}
+
+		ListenerThread listener = new ListenerThread();
+		listener.run();
 
 		return true;
 	}
 
-	private boolean Signup() {
-
+	private boolean Signup(String username, String firstname, String lastname, String email, String address, String password) {
 		return true;
 	}
 }

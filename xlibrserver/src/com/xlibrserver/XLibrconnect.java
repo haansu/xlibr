@@ -15,16 +15,16 @@ public class XLibrconnect implements Runnable {
 	BufferedReader		buffReader;
 
 	String				buffPrint;
-
 	PrintWriter			printWr;
 
-	InputStream 		inputStr;
 	ObjectInputStream	objInputStr;
+	ObjectOutputStream	objOutputStr;
+
+	private boolean kill = false;
 
 
 	XLibrconnect(int _port) {
 		try {
-
 			serverSocket = new ServerSocket(_port);
 			serverSocket.setSoTimeout(5000);
 		} catch (IOException e) {
@@ -32,12 +32,10 @@ public class XLibrconnect implements Runnable {
 		}
 	}
 
-	public <T> T ReceiveObject(Socket socket) {
+	public <T> T ReceiveObject() {
 		T receivedObj;
 
 		try {
-			inputStr = socket.getInputStream();
-			objInputStr = new ObjectInputStream(inputStr);
 			receivedObj = (T) objInputStr.readObject();
 
 		} catch (IOException | ClassNotFoundException e) {
@@ -46,6 +44,16 @@ public class XLibrconnect implements Runnable {
 		}
 
 		return receivedObj;
+	}
+
+	public <T> void SendObject(T _object) {
+		try {
+			Log.INFO("Sending object to client!");
+			objOutputStr.writeObject(_object);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -62,6 +70,7 @@ public class XLibrconnect implements Runnable {
 
 		while(!Thread.interrupted()) {
 			try {
+
 				socket = serverSocket.accept();
 
 				inputStrRd = new InputStreamReader(socket.getInputStream());
@@ -73,6 +82,9 @@ public class XLibrconnect implements Runnable {
 				printWr = new PrintWriter(socket.getOutputStream());
 				printWr.println("Connected!");
 				printWr.flush();
+
+				objOutputStr = new ObjectOutputStream(socket.getOutputStream());
+				objInputStr = new ObjectInputStream(socket.getInputStream());
 
 				while (socket.isConnected()) {
 					if (!DataRouter(socket)) {
@@ -93,7 +105,7 @@ public class XLibrconnect implements Runnable {
 		if (socket.isClosed())
 			return false;
 
-		var receivedRequest = ReceiveObject(socket);
+		var receivedRequest = ReceiveObject();
 
 		if (receivedRequest instanceof ClientRequest) {
 			ClientRequest request = (ClientRequest) receivedRequest;
@@ -102,17 +114,23 @@ public class XLibrconnect implements Runnable {
 				case LOGIN: {
 					Log.INFO(socket.getInetAddress().toString().substring(1) + " requested LOGIN!");
 
-					var receivedData = ReceiveObject(socket);
+					var receivedData = ReceiveObject();
 					UserData loginData = (UserData) receivedData;
 
 					Login(loginData);
+					try {
+						objOutputStr.reset();
+					} catch (IOException e){
+						e.printStackTrace();
+					}
+					SendObject(loginData);
 					break;
 				}
 
 				case SIGNUP: {
 					Log.INFO(socket.getInetAddress().toString().substring(1) + " requested SIGNUP!");
 
-					var receivedData = ReceiveObject(socket);
+					var receivedData = ReceiveObject();
 					UserData signupData = (UserData) receivedData;
 
 					SignUp(signupData);
@@ -120,8 +138,10 @@ public class XLibrconnect implements Runnable {
 				}
 
 				case CLOSECONNECTION: {
+					kill = true;
 					try {
 						socket.close();
+
 					} catch	(IOException e) {
 						e.printStackTrace();
 					}

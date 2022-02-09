@@ -15,6 +15,8 @@ import static com.xlibrpkg.ClientRequest.RequestType.*;
 
 public class XLibrApplication extends Application {
 
+	static public String IP = "192.168.0.174";
+	static public int PORT = 23313;
 	static public Stage mainStage;
 
 	public static String GetHash(byte[] _input, String _algorithm) {
@@ -44,38 +46,14 @@ public class XLibrApplication extends Application {
 		mainStage.show();
 	}
 
-	private void xStart() {
-		Log.getInstance();
-
-		UserData userData = new UserData();
-		userData.setUsername("TheDoctor");
-		userData.setFirstname("John");
-		userData.setLastname("Smith");
-		userData.setEmail("johnsmith@tardis.uni");
-		userData.setAddress("TARDIS");
-		String password = "secure";
-		String hashedPass = GetHash(password.getBytes(), "SHA-256");
-		userData.setPassword(hashedPass);
-
-		System.out.println(userData);
-
-		ClientRequest request = new ClientRequest();
-		request.value = LOGIN;
-
-		XLibrApplication app = new XLibrApplication();
-
+	@Override
+	public void stop() {
 		try {
-			XLibrconnect xlibrconnect = new XLibrconnect("localhost", 23313);
-			xlibrconnect.SendObject(request);
-			xlibrconnect.SendObject(userData);
-			request.value = SIGNUP;
-			xlibrconnect.SendObject(request);
-			xlibrconnect.SendObject(userData);
-			request.value = CLOSECONNECTION;
-			xlibrconnect.SendObject(request);
-
-		} catch (Exception exp) {
-			Log.CRITICAL("Unable to connect to server!");
+			Log.INFO("Closing connection!");
+			XLibrController.s_Request.value = CLOSECONNECTION;
+			XLibrController.s_Xlibrconnect.SendObject(XLibrController.s_Request);
+		} catch (Exception e) {
+			Log.CRITICAL("Connection severed");
 		}
 	}
 }

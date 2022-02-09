@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 
-
 <AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.xlibrpkg.XLibrController">
    <children>
       <MenuBar layoutY="2.0" prefWidth="1000.0" style="-fx-background-color: #fff;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -31,20 +30,20 @@
       </MenuBar>
       <AnchorPane layoutY="25.0" prefHeight="0.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="25.0">
          <children>
-            <FlowPane layoutY="148.0" orientation="VERTICAL" prefHeight="575.0" prefWidth="200.0" style="-fx-background-color: #333;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <FlowPane layoutY="148.0" orientation="VERTICAL" prefHeight="575.0" prefWidth="200.0" style="-fx-background-color: #333; -fx-padding: 80 0 0 0;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Button" />
-                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Button" />
-                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Button" />
-                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Button" />
-                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Button" />
-                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Button" />
-                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Button" />
-                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Button" />
-                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Button" />
+                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" style="-fx-background-color: rgba(0,0,0,0.2);" text="My Books" textFill="WHITE" />
+                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" style="-fx-background-color: rgba(0,0,0,0);" text="All Books" textFill="WHITE" />
+                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" style="-fx-background-color: rgba(0,0,0,0.2);" text="Favourite" textFill="WHITE" />
+                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" style="-fx-background-color: rgba(0,0,0,0);" text="Wishlist" textFill="WHITE" />
+                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" style="-fx-background-color: rgba(0,0,0,0.2);" text="My Account" textFill="WHITE" />
+                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" style="-fx-background-color: rgba(0,0,0,0);" text="Lent Books" textFill="WHITE" />
+                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" style="-fx-background-color: rgba(0,0,0,0.2);" text="Send notice" textFill="WHITE" />
+                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" style="-fx-background-color: rgba(0,0,0,0);" text="Add Book" textFill="WHITE" />
+                  <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" style="-fx-background-color: rgba(0,0,0,0.2);" text="Remove Book" textFill="WHITE" />
                </children>
             </FlowPane>
-            <Button layoutY="525.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Button" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            <Button layoutY="525.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: rgba(0,0,0,0);" text="Log Out" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #999;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0" />
