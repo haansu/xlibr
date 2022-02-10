@@ -11,6 +11,7 @@ import java.security.MessageDigest;
 import java.util.Objects;
 
 import static com.xlibrpkg.ClientRequest.RequestType.*;
+import static com.xlibrpkg.XLibrController.s_Request;
 
 
 public class XLibrApplication extends Application {
@@ -50,8 +51,8 @@ public class XLibrApplication extends Application {
 	public void stop() {
 		try {
 			Log.INFO("Closing connection!");
-			XLibrController.s_Request.value = CLOSECONNECTION;
-			XLibrController.s_Xlibrconnect.SendObject(XLibrController.s_Request);
+			s_Request.value = CLOSECONNECTION;
+			XLibrController.s_Xlibrconnect.SendObject(s_Request);
 		} catch (Exception e) {
 			Log.CRITICAL("Connection severed");
 		}

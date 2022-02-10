@@ -78,16 +78,6 @@ public class XLibrconnect implements Runnable {
 
 				socket = serverSocket.accept();
 
-				inputStrRd = new InputStreamReader(socket.getInputStream());
-				buffReader = new BufferedReader(inputStrRd);
-
-				buffPrint = buffReader.readLine();
-				Log.INFO("Client - " + buffPrint);
-
-				printWr = new PrintWriter(socket.getOutputStream());
-				printWr.println("Connected!");
-				printWr.flush();
-
 				objOutputStr = new ObjectOutputStream(socket.getOutputStream());
 				objInputStr = new ObjectInputStream(socket.getInputStream());
 

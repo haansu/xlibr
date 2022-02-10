@@ -147,6 +147,7 @@ public class XLibrController  {
 			return false;
 
 		Log.getInstance();
+
 		s_Request = new ClientRequest();
 		s_Request.value = LOGIN;
 
@@ -158,9 +159,9 @@ public class XLibrController  {
 
 		Log.INFO(userData.toString());
 
-
 		try {
-			s_Xlibrconnect = new XLibrConnect(XLibrApplication.IP, XLibrApplication.PORT);
+			if (!s_Xlibrconnect.HadConnection())
+				s_Xlibrconnect = new XLibrConnect(XLibrApplication.IP, XLibrApplication.PORT);
 			s_Xlibrconnect.SendObject(s_Request);
 			s_Xlibrconnect.SendObject(userData);
 		} catch (Exception e) {
@@ -199,7 +200,8 @@ public class XLibrController  {
 
 
 		try {
-			s_Xlibrconnect = new XLibrConnect(XLibrApplication.IP, XLibrApplication.PORT);
+			if (!s_Xlibrconnect.HadConnection())
+				s_Xlibrconnect = new XLibrConnect(XLibrApplication.IP, XLibrApplication.PORT);
 			s_Xlibrconnect.SendObject(s_Request);
 			s_Xlibrconnect.SendObject(userData);
 		} catch (Exception e) {
