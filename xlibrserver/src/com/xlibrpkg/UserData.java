@@ -10,6 +10,7 @@ public class UserData implements Serializable {
 	String email;
 	String address;
 	String password;
+	int role;
 
 	UserData() {
 		username = null;
@@ -18,6 +19,7 @@ public class UserData implements Serializable {
 		email = null;
 		address = null;
 		password = null;
+		role = 0;
 	}
 
 	@Override

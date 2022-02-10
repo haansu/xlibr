@@ -3,9 +3,12 @@ package com.xlibrserver;
 import java.io.*;
 import java.net.*;
 
+import com.mysql.cj.xdevapi.Client;
 import com.xlibrpkg.Log;
 import com.xlibrpkg.UserData;
 import com.xlibrpkg.ClientRequest;
+
+import static com.xlibrpkg.ClientRequest.RequestType.*;
 
 public class XLibrconnect implements Runnable {
 
@@ -123,7 +126,17 @@ public class XLibrconnect implements Runnable {
 					} catch (IOException e){
 						e.printStackTrace();
 					}
-					SendObject(loginData);
+
+					ClientRequest returnRequest = new ClientRequest();
+					returnRequest.value = LOGIN;
+
+					if (DBConnect.Login(loginData.getUsername(), loginData.getPassword())) {
+						SendObject(returnRequest);
+						SendObject(true);
+					} else {
+						SendObject(returnRequest);
+						SendObject(false);
+					}
 					break;
 				}
 

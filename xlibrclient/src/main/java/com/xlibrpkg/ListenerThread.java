@@ -3,6 +3,8 @@ package com.xlibrpkg;
 import java.io.*;
 import java.net.Socket;
 
+import static com.xlibrpkg.ClientRequest.RequestType.LOGIN;
+
 public class ListenerThread extends Thread {
 
 	public boolean exit = false;
@@ -60,8 +62,21 @@ public class ListenerThread extends Thread {
 			return false;
 
 		var receivedRequest = ReceiveObject();
-		if (receivedRequest instanceof UserData)
-			Log.SUCCESS("Object received: UserData");
+		if (receivedRequest instanceof ClientRequest) {
+			ClientRequest req = (ClientRequest) receivedRequest;
+			switch (req.value) {
+				case LOGIN: {
+					boolean allow = ReceiveObject();
+					if (allow)
+						XLibrController.allowLogin = true;
+					else
+						XLibrController.allowLogin = false;
+
+					break;
+				}
+			}
+
+		}
 
 		kill();
 		return true;

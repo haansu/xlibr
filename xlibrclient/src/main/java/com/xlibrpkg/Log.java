@@ -17,7 +17,7 @@ public class Log {
 
 	private static DateTimeFormatter format;
 
-	public Log(String _formatText) {
+	private Log(String _formatText) {
 		format = DateTimeFormatter.ofPattern(_formatText);
 	}
 

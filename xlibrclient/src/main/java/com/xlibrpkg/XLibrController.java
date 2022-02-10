@@ -8,6 +8,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.Objects;
 
 import static com.xlibrpkg.ClientRequest.RequestType.*;
@@ -16,6 +19,7 @@ public class XLibrController {
 
 	static public XLibrConnect s_Xlibrconnect;
 	static public ClientRequest s_Request;
+	static public boolean allowLogin = false;
 
 	@FXML
 	private TextField usernameField;
@@ -75,6 +79,7 @@ public class XLibrController {
 
 		Log.INFO(userData.toString());
 
+
 		try {
 			s_Xlibrconnect = new XLibrConnect(XLibrApplication.IP, XLibrApplication.PORT);
 			s_Xlibrconnect.SendObject(s_Request);
@@ -86,6 +91,9 @@ public class XLibrController {
 
 		ListenerThread listener = new ListenerThread();
 		listener.run();
+
+		if(!allowLogin)
+			return false;
 
 		return true;
 	}

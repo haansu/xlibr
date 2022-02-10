@@ -3,6 +3,7 @@ package com.xlibrpkg;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 public class XLibrConnect extends Thread {
@@ -23,6 +24,7 @@ public class XLibrConnect extends Thread {
 
 
 	XLibrConnect(String _host, int _port) throws IOException {
+
 		s_Socket = new Socket(_host, _port);
 
 		try {
