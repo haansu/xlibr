@@ -112,7 +112,6 @@ public class XLibrconnect implements Runnable {
 					var receivedData = ReceiveObject();
 					UserData loginData = (UserData) receivedData;
 
-					Login(loginData);
 					try {
 						objOutputStr.reset();
 					} catch (IOException e){
@@ -149,7 +148,6 @@ public class XLibrconnect implements Runnable {
 						SendObject(false);
 					}
 
-					SignUp(signupData);
 					break;
 				}
 
@@ -177,13 +175,5 @@ public class XLibrconnect implements Runnable {
 			}
 		}
 		return true;
-	}
-
-	private void Login(UserData loginData) {
-
-	}
-
-	private void SignUp(UserData signupData) {
-
 	}
 }

@@ -49,18 +49,6 @@ public class XLibrController  {
 
 
 	@FXML
-	static public TableView bookTable;
-	@FXML
-	static public TableColumn<BookData, String> c1;
-	@FXML
-	static public TableColumn<BookData, String> c2;
-	@FXML
-	static public TableColumn<BookData, String> c3;
-	@FXML
-	static public TableColumn<BookData, Integer> c4;
-
-
-	@FXML
 	public void LoginButton(ActionEvent _actionEvent) {
 		String userText = usernameField.getText();
 		String passText = passwordField.getText();
@@ -128,18 +116,7 @@ public class XLibrController  {
 
 	@FXML
 	static public void DisplayBooks() {
-		c1 = new TableColumn<>();
-		c2 = new TableColumn<>();
-		c3 = new TableColumn<>();
-		c4 = new TableColumn<>();
-		c1.setCellValueFactory(new PropertyValueFactory<BookData, String>("title"));
-		c2.setCellValueFactory(new PropertyValueFactory<BookData, String>("author"));
-		c3.setCellValueFactory(new PropertyValueFactory<BookData, String>("publisher"));
-		c4.setCellValueFactory(new PropertyValueFactory<BookData, Integer>("releaseYear"));
 
-		ObservableList<BookData> obsList = FXCollections.observableArrayList(s_BookList);
-
-		//bookTable.setItems(obsList);
 	}
 
 	private boolean Login(String _username, String _password) {
@@ -172,10 +149,7 @@ public class XLibrController  {
 		ListenerThread listener = new ListenerThread();
 		listener.run();
 
-		if(!allowLogin)
-			return false;
-
-		return true;
+		return allowLogin;
 	}
 
 	private boolean Signup(String _username, String _firstname, String _lastname, String _email, String _address, String _password) {
@@ -212,9 +186,6 @@ public class XLibrController  {
 		ListenerThread listener = new ListenerThread();
 		listener.run();
 
-		if(!allowSignup)
-			return false;
-
-		return true;
+		return allowSignup;
 	}
 }

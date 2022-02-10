@@ -44,6 +44,7 @@ public class XLibrApplication extends Application {
 		mainStage.setTitle("XLibr Login");
 		mainStage.setScene(new Scene(root));
 		mainStage.setResizable(false);
+
 		mainStage.show();
 	}
 
