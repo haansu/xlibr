@@ -12,6 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -30,8 +31,6 @@ public class XLibrController  {
 	private TextField usernameField;
 	@FXML
 	private PasswordField passwordField;
-	@FXML
-	static public TableView bookTable;
 
 	@FXML
 	private TextField sign_username;
@@ -49,15 +48,16 @@ public class XLibrController  {
 	private TextField sign_address;
 
 
-
 	@FXML
-	static private TableColumn<BookData, String> c1;
+	static public TableView bookTable;
 	@FXML
-	static private TableColumn<BookData, String> c2;
+	static public TableColumn<BookData, String> c1;
 	@FXML
-	static private TableColumn<BookData, String> c3;
+	static public TableColumn<BookData, String> c2;
 	@FXML
-	static private TableColumn<BookData, Integer> c4;
+	static public TableColumn<BookData, String> c3;
+	@FXML
+	static public TableColumn<BookData, Integer> c4;
 
 
 	@FXML
@@ -126,11 +126,12 @@ public class XLibrController  {
 		listener.run();
 	}
 
+	@FXML
 	static public void DisplayBooks() {
-		/*c1 = new TableColumn<>();
-		c2 = new TableColumn<>();
+		c1 = new TableColumn<>();
 		c2 = new TableColumn<>();
 		c3 = new TableColumn<>();
+		c4 = new TableColumn<>();
 		c1.setCellValueFactory(new PropertyValueFactory<BookData, String>("title"));
 		c2.setCellValueFactory(new PropertyValueFactory<BookData, String>("author"));
 		c3.setCellValueFactory(new PropertyValueFactory<BookData, String>("publisher"));
@@ -138,11 +139,7 @@ public class XLibrController  {
 
 		ObservableList<BookData> obsList = FXCollections.observableArrayList(s_BookList);
 
-		for (BookData elem : s_BookList) {
-			obsList.add(new BookData(elem.id, elem.title, elem.author, elem.publisher, elem.synopsis, elem.releaseYear));
-		}
-
-		bookTable.setItems(obsList);*/
+		//bookTable.setItems(obsList);
 	}
 
 	private boolean Login(String _username, String _password) {
