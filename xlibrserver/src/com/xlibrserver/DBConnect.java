@@ -2,6 +2,7 @@ package com.xlibrserver;
 
 import com.xlibrpkg.BookData;
 import com.xlibrpkg.Log;
+import com.xlibrpkg.UserData;
 
 import java.io.Serializable;
 import java.sql.*;
@@ -14,6 +15,7 @@ public class DBConnect implements Serializable {
 	private static Connection s_Connection;
 	private static PreparedStatement s_PreparedStatement;
 	private static ResultSet s_ResultSet;
+	private static Statement s_Statement;
 
 
 	private DBConnect() {
@@ -49,8 +51,33 @@ public class DBConnect implements Serializable {
 		return false;
 	}
 
-	public static void Signup() {
+	public static boolean Signup(UserData _user) {
+		try {
+			String statement = "SELECT * FROM user_data WHERE user_name='" + _user.getUsername() + "' OR email='" + _user.getEmail() + "'";
+			s_PreparedStatement = s_Connection.prepareStatement(statement);
+			s_ResultSet = s_PreparedStatement.executeQuery();
 
+			int count = 0;
+			while(s_ResultSet.next())
+				count++;
+			Log.getInstance();
+			Log.INFO("There are " + count + " users that mach the received data");
+
+			if (count > 0)
+				return false;
+			else {
+				String insert = "INSERT INTO user_data (user_name, first_name, last_name, email, address, pass_word, user_role)" +
+						"VALUES (\"" + _user.getUsername()  + "\", " + "\"" + _user.getFirstname()  + "\", " + "\"" + _user.getLastname()  + "\", " + "\"" + _user.getEmail()  + "\", " + "\"" + _user.getAddress()  + "\", " + "\"" + _user.getPassword()  + "\", " +  0  + ");";
+				s_Statement = s_Connection.createStatement();
+				s_Statement.executeUpdate(insert);
+
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return false;
 	}
 
 	public static List<BookData> GetBooks() {

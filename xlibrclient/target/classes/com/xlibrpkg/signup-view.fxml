@@ -10,14 +10,14 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.xlibrpkg.XLibrController">
    <children>
-      <TextField layoutX="20.0" layoutY="166.0" minHeight="50.0" promptText="Username" AnchorPane.leftAnchor="50.0" />
-      <TextField layoutX="226.0" layoutY="166.0" minHeight="50.0" promptText="First name" />
-      <TextField layoutX="425.0" layoutY="166.0" minHeight="50.0" promptText="Last name" AnchorPane.rightAnchor="50.0" />
-      <PasswordField layoutX="140.0" layoutY="235.0" promptText="Password" />
-      <PasswordField layoutX="311.0" layoutY="235.0" promptText="Repeat password" />
-      <TextField layoutX="50.0" layoutY="276.0" promptText="E-mail" />
-      <TextField layoutX="301.0" layoutY="276.0" promptText="Address" />
-      <Button layoutX="519.0" layoutY="354.0" minWidth="75.0" mnemonicParsing="false" text="Sign Up" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+      <TextField fx:id="sign_username" layoutX="20.0" layoutY="166.0" minHeight="50.0" promptText="Username" AnchorPane.leftAnchor="50.0" />
+      <TextField fx:id="sign_firstname" layoutX="226.0" layoutY="166.0" minHeight="50.0" promptText="First name" />
+      <TextField fx:id="sign_lastname" layoutX="425.0" layoutY="166.0" minHeight="50.0" promptText="Last name" AnchorPane.rightAnchor="50.0" />
+      <PasswordField fx:id="sign_password" layoutX="140.0" layoutY="235.0" promptText="Password" />
+      <PasswordField fx:id="sign_repassword" layoutX="311.0" layoutY="235.0" promptText="Repeat password" />
+      <TextField fx:id="sign_email" layoutX="50.0" layoutY="276.0" promptText="E-mail" />
+      <TextField fx:id="sign_address" layoutX="301.0" layoutY="276.0" promptText="Address" />
+      <Button layoutX="519.0" layoutY="354.0" minWidth="75.0" mnemonicParsing="false" text="Sign Up" onAction="#SignupButton" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>

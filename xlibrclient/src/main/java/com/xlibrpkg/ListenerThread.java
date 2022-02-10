@@ -2,6 +2,7 @@ package com.xlibrpkg;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.List;
 
 import static com.xlibrpkg.ClientRequest.RequestType.LOGIN;
 
@@ -74,6 +75,24 @@ public class ListenerThread extends Thread {
 
 					break;
 				}
+
+				case SIGNUP: {
+					boolean allow = ReceiveObject();
+					if (allow)
+						XLibrController.allowSignup = true;
+					else
+						XLibrController.allowSignup = false;
+
+					break;
+				}
+
+				case TRANSFERBOOKS:
+					XLibrController.s_BookList = ReceiveObject();
+					XLibrController.DisplayBooks();
+					for (BookData elem : XLibrController.s_BookList) {
+						Log.WARN(elem.toString());
+					}
+					break;
 			}
 
 		}

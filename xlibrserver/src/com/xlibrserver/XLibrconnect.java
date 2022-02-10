@@ -2,8 +2,10 @@ package com.xlibrserver;
 
 import java.io.*;
 import java.net.*;
+import java.util.List;
 
 import com.mysql.cj.xdevapi.Client;
+import com.xlibrpkg.BookData;
 import com.xlibrpkg.Log;
 import com.xlibrpkg.UserData;
 import com.xlibrpkg.ClientRequest;
@@ -146,7 +148,29 @@ public class XLibrconnect implements Runnable {
 					var receivedData = ReceiveObject();
 					UserData signupData = (UserData) receivedData;
 
+					ClientRequest returnRequest = new ClientRequest();
+					returnRequest.value = SIGNUP;
+
+					if (DBConnect.Signup(signupData)) {
+						SendObject(returnRequest);
+						SendObject(true);
+					} else {
+						SendObject(returnRequest);
+						SendObject(false);
+					}
+
 					SignUp(signupData);
+					break;
+				}
+
+				case TRANSFERBOOKS: {
+					List<BookData> receivedBooks = DBConnect.GetBooks();
+
+					ClientRequest returnRequest = new ClientRequest();
+					returnRequest.value = TRANSFERBOOKS;
+
+					SendObject(returnRequest);
+					SendObject(receivedBooks);
 					break;
 				}
 

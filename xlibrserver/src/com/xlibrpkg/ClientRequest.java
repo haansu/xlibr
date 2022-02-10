@@ -5,7 +5,8 @@ import java.io.Serializable;
 public class ClientRequest implements Serializable {
 
 	public enum RequestType{
-		LOGIN, SIGNUP, CLOSECONNECTION
+		LOGIN, SIGNUP, CLOSECONNECTION,
+		TRANSFERBOOKS
 	}
 
 	public RequestType value;
