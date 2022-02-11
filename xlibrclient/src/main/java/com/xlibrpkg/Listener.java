@@ -5,11 +5,10 @@ import java.net.Socket;
 
 import static com.xlibrpkg.XLibrGlobals.*;
 
-public class ListenerThread extends Thread {
+public class Listener {
 
 	public boolean exit = false;
 
-	@Override
 	public void start() {
 		execute();
 	}

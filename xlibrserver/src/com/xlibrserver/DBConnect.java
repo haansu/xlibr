@@ -133,7 +133,7 @@ public class DBConnect implements Serializable {
 
 		try {
 			// Gets all user borrowed books and returns an array
-			Log.WARN("" + userID);
+			Log.NOTE("User " + userID);
 			String statement = "SELECT * FROM book_data JOIN user_book ON book_data.id=book_id WHERE user_id=" + userID;
 			s_PreparedStatement = s_Connection.prepareStatement(statement);
 			s_ResultSet = s_PreparedStatement.executeQuery();

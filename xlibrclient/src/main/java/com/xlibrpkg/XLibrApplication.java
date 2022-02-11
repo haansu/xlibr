@@ -23,8 +23,8 @@ public class XLibrApplication extends Application {
 			messageDigest.update(_input);
 			byte[] digested = messageDigest.digest();
 			hashValue = DatatypeConverter.printHexBinary(digested);
-		} catch (Exception exp) {
-			exp.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		return hashValue;

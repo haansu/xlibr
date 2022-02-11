@@ -144,7 +144,7 @@ public class XLibrController {
 		s_Xlibrconnect.SendObject(s_Request);
 
 		// Started listener to listen to commands from the server
-		ListenerThread listener = new ListenerThread();
+		Listener listener = new Listener();
 		listener.start();
 
 		// Don't know why, but it works!
@@ -186,9 +186,10 @@ public class XLibrController {
 	}
 
 	@FXML
-	public void RefreshMyBooks(BookData _book) {
+	public void RefreshMyBooks() {
 		ObservableList<BookData> myBooks = myBooksTable.getItems();
-		myBooks.add(_book);
+		myBooks.clear();
+		myBooks.addAll(s_MyBooks);
 		myBooksTable.setItems(myBooks);
 	}
 
@@ -213,12 +214,13 @@ public class XLibrController {
 		if (!XLibrConnect.HadConnection())
 			s_Xlibrconnect = new XLibrConnect(IP, PORT);
 
+
 		s_Xlibrconnect.SendObject(s_Request);
 		s_Xlibrconnect.SendObject(userData);
 
-
-		ListenerThread listener = new ListenerThread();
+		Listener listener = new Listener();
 		listener.start();
+
 
 		return allowLogin;
 	}
@@ -243,6 +245,7 @@ public class XLibrController {
 
 		Log.INFO(userData.toString());
 
+
 		try {
 			if (!XLibrConnect.HadConnection())
 				s_Xlibrconnect = new XLibrConnect(IP, PORT);
@@ -253,7 +256,7 @@ public class XLibrController {
 			return false;
 		}
 
-		ListenerThread listener = new ListenerThread();
+		Listener listener = new Listener();
 		listener.start();
 
 		return allowSignup;
@@ -275,6 +278,9 @@ public class XLibrController {
 		s_Xlibrconnect.SendObject(s_Request);
 		s_Xlibrconnect.SendObject(selectedBook.getId());
 
-		RefreshMyBooks(selectedBook);
+		Listener listener = new Listener();
+		listener.start();
+
+		RefreshMyBooks();
 	}
 }

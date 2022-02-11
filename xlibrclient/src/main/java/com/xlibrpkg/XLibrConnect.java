@@ -1,7 +1,10 @@
 package com.xlibrpkg;
 
 import java.io.*;
+import java.net.ConnectException;
 import java.net.Socket;
+import java.net.SocketException;
+
 import static com.xlibrpkg.XLibrGlobals.*;
 
 public class XLibrConnect extends Thread {
@@ -20,6 +23,10 @@ public class XLibrConnect extends Thread {
 
 			s_ObjOutputStr = new ObjectOutputStream(s_Socket.getOutputStream());
 			s_ObjInputStr = new ObjectInputStream(s_Socket.getInputStream());
+		} catch (ConnectException e) {
+			Log.ERROR("Connection refused!");
+		} catch (SocketException e) {
+			Log.ERROR("Connection reset!");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

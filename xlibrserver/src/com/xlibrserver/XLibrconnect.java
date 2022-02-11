@@ -83,6 +83,7 @@ public class XLibrconnect implements Runnable {
 				objOutputStr = new ObjectOutputStream(socket.getOutputStream());
 				objInputStr = new ObjectInputStream(socket.getInputStream());
 
+
 				// Listener
 				while (socket.isConnected()) {
 					if (!DataRouter(socket)) {
