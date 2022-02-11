@@ -1,23 +1,25 @@
 package com.xlibrpkg;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import jakarta.xml.bind.DatatypeConverter;
+
+import java.net.URL;
 import java.security.MessageDigest;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import static com.xlibrpkg.ClientRequest.RequestType.*;
-import static com.xlibrpkg.XLibrController.s_Request;
-
+import static com.xlibrpkg.XLibrGlobals.*;
 
 public class XLibrApplication extends Application {
 
-	static public String IP = "192.168.0.174";
-	static public int PORT = 23313;
 	static public Stage mainStage;
 
 	public static String GetHash(byte[] _input, String _algorithm) {
@@ -39,13 +41,16 @@ public class XLibrApplication extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Log.getInstance();
-		Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login-view.fxml")));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("login-view.fxml"));
+		Parent root = loader.load();
 		mainStage = primaryStage;
+
 		mainStage.setTitle("XLibr Login");
 		mainStage.setScene(new Scene(root));
 		mainStage.setResizable(false);
 
 		mainStage.show();
+
 	}
 
 	@Override
@@ -53,7 +58,7 @@ public class XLibrApplication extends Application {
 		try {
 			Log.INFO("Closing connection!");
 			s_Request.value = CLOSECONNECTION;
-			XLibrController.s_Xlibrconnect.SendObject(s_Request);
+			s_Xlibrconnect.SendObject(s_Request);
 		} catch (Exception e) {
 			Log.CRITICAL("Connection severed");
 		}

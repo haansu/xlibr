@@ -2,9 +2,8 @@ package com.xlibrpkg;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.List;
 
-import static com.xlibrpkg.ClientRequest.RequestType.LOGIN;
+import static com.xlibrpkg.XLibrGlobals.*;
 
 public class ListenerThread extends Thread {
 
@@ -21,14 +20,14 @@ public class ListenerThread extends Thread {
 			try {
 				Log.NOTE("Receiving data!");
 
-				if (!DataRouter(XLibrConnect.s_Socket)) {
+				if (!DataRouter(s_Socket)) {
 					Log.INFO("Connection closed!");
 					break;
 				}
 
-				XLibrConnect.s_Socket.getOutputStream().flush();
+				s_Socket.getOutputStream().flush();
 			} catch (IOException e) {
-				if (!XLibrConnect.s_Socket.isClosed()) {
+				if (!s_Socket.isClosed()) {
 					Log.NOTE("Connection closed!");
 					break;
 				}
@@ -43,12 +42,12 @@ public class ListenerThread extends Thread {
 	public <T> T ReceiveObject() {
 		T receivedObj;
 		try {
-			XLibrConnect.s_ObjOutputStr.reset();
+			s_ObjOutputStr.reset();
 		} catch (IOException e){
 			e.printStackTrace();
 		}
 		try {
-			receivedObj = (T) XLibrConnect.s_ObjInputStr.readObject();
+			receivedObj = (T) s_ObjInputStr.readObject();
 
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
@@ -69,9 +68,9 @@ public class ListenerThread extends Thread {
 				case LOGIN: {
 					boolean allow = ReceiveObject();
 					if (allow)
-						XLibrController.allowLogin = true;
+						allowLogin = true;
 					else
-						XLibrController.allowLogin = false;
+						allowLogin = false;
 
 					break;
 				}
@@ -79,17 +78,17 @@ public class ListenerThread extends Thread {
 				case SIGNUP: {
 					boolean allow = ReceiveObject();
 					if (allow)
-						XLibrController.allowSignup = true;
+						allowSignup = true;
 					else
-						XLibrController.allowSignup = false;
+						allowSignup = false;
 
 					break;
 				}
 
 				case TRANSFERBOOKS:
-					XLibrController.s_BookList = ReceiveObject();
-					XLibrController.DisplayBooks();
-					for (BookData elem : XLibrController.s_BookList) {
+					s_BookList = ReceiveObject();
+					//XLibrController.DisplayBooks();
+					for (BookData elem : s_BookList) {
 						Log.WARN(elem.toString());
 					}
 					break;

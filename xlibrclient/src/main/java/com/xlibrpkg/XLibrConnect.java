@@ -5,14 +5,11 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import static com.xlibrpkg.XLibrGlobals.*;
 
 public class XLibrConnect extends Thread {
-	static public Socket s_Socket;
 
 	InetAddress ip;
-
-	static public ObjectOutputStream s_ObjOutputStr;
-	static public ObjectInputStream s_ObjInputStr;
 
 	static public boolean s_Comms = false;
 	static private boolean s_HadConnection = false;
