@@ -40,7 +40,13 @@ public class XLibrconnect implements Runnable {
 			receivedObj = (T) objInputStr.readObject();
 
 		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
+			try {
+				Log.ERROR("Connection terminated!");
+				socket.close();
+			} catch (IOException f) {
+				f.printStackTrace();
+			}
+
 			return null;
 		}
 
@@ -62,7 +68,12 @@ public class XLibrconnect implements Runnable {
 		try {
 			accept();
 		} catch (IOException e) {
-			e.printStackTrace();
+			try {
+				Log.ERROR("Connection terminated!");
+				socket.close();
+			} catch (IOException f) {
+				f.printStackTrace();
+			}
 		}
 	}
 
@@ -87,7 +98,7 @@ public class XLibrconnect implements Runnable {
 				// Listener
 				while (socket.isConnected()) {
 					if (!DataRouter(socket)) {
-						Log.SUCCESS("Connection closed!");
+						Log.NOTE("Connection closed!");
 						break;
 					}
 				}

@@ -181,10 +181,6 @@ public class DBConnect implements Serializable {
 		}
 	}
 
-	public static void GetBookData() {
-
-	}
-
 	public static DBConnect getInstance() {
 		if (s_Instance == null)
 			s_Instance = new DBConnect();

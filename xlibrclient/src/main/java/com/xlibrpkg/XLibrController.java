@@ -15,6 +15,7 @@ import java.util.Objects;
 
 import static com.xlibrpkg.ClientRequest.RequestType.*;
 import static com.xlibrpkg.XLibrGlobals.*;
+import static java.lang.Thread.sleep;
 
 public class XLibrController {
 
@@ -87,8 +88,6 @@ public class XLibrController {
 	private TextField add_book_release;
 	@FXML
 	private Text add_book_text;
-	@FXML
-	private Button add_book_button;
 
 
 	@FXML
@@ -108,7 +107,7 @@ public class XLibrController {
 	}
 
 	@FXML
-	public void SignupButton(ActionEvent actionEvent) {
+	public void SignupButton(ActionEvent _actionEvent) {
 		String username = sign_username.getText();
 		String firstname = sign_firstname.getText();
 		String lastname =  sign_lastname.getText();
@@ -329,5 +328,20 @@ public class XLibrController {
 
 		add_book_text.setText("Book Added");
 		Log.NOTE("Book Added");
+
+		new Thread(() -> {
+			try {
+				sleep(1500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+			add_book_text.setText("");
+		}).start();
+	}
+
+	@FXML
+	public void RemoveBook(ActionEvent _actionEvent) {
+
 	}
 }
