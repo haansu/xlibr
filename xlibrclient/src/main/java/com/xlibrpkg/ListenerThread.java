@@ -18,6 +18,7 @@ public class ListenerThread extends Thread {
 		Log.getInstance();
 		Log.INFO("Thread running");
 
+		// While communication is established listenes to data
 		while (XLibrConnect.s_Comms) {
 			if (exit)
 				return;
@@ -30,6 +31,7 @@ public class ListenerThread extends Thread {
 					break;
 				}
 
+				// Clears output stream
 				s_Socket.getOutputStream().flush();
 			} catch (IOException e) {
 				if (!s_Socket.isClosed()) {
@@ -62,6 +64,7 @@ public class ListenerThread extends Thread {
 		return receivedObj;
 	}
 
+	// Routes received data from server (just like the server)
 	public boolean DataRouter(Socket socket) {
 		if (socket.isClosed())
 			return false;

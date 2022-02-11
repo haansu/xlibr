@@ -10,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.io.IOException;
 import java.util.Objects;
 
 import static com.xlibrpkg.ClientRequest.RequestType.*;
@@ -81,6 +80,8 @@ public class XLibrController {
 		String passText = passwordField.getText();
 		Log.INFO("Username - " + userText);
 		Log.INFO("Password - " + XLibrApplication.GetHash(passText.getBytes(), "Sha-256"));
+
+		// Opens main stage if login is valid
 		if (Login(userText, passText))
 			try {
 				OpenMainStage();
@@ -114,6 +115,7 @@ public class XLibrController {
 
 	@FXML
 	public void SignupSwitch(ActionEvent _actionEvent) throws Exception {
+		// Switches scene to the signup scene
 		Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("signup-view.fxml")));
 		XLibrApplication.mainStage.setTitle("XLibr Signup");
 		XLibrApplication.mainStage.setScene(new Scene(root));
@@ -121,6 +123,7 @@ public class XLibrController {
 
 	@FXML
 	public void LoginSwitch(ActionEvent _actionEvent) throws Exception {
+		// Switches scene to the login scene
 		Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login-view.fxml")));
 		XLibrApplication.mainStage.setTitle("XLibr Login");
 		XLibrApplication.mainStage.setScene(new Scene(root));
@@ -136,12 +139,15 @@ public class XLibrController {
 		XLibrApplication.mainStage.setMinHeight(600);
 		XLibrApplication.mainStage.setScene(new Scene(root));
 
+		// Requests data for books to populate the tables
 		s_Request.value = TRANSFERBOOKS;
 		s_Xlibrconnect.SendObject(s_Request);
 
+		// Started listener to listen to commands from the server
 		ListenerThread listener = new ListenerThread();
 		listener.start();
 
+		// Don't know why, but it works!
 		controller.DisplayBooks();
 		controller.RemoveAdminTabs();
 	}
@@ -203,15 +209,13 @@ public class XLibrController {
 
 		Log.INFO(userData.toString());
 
-		try {
-			if (!XLibrConnect.HadConnection())
-				s_Xlibrconnect = new XLibrConnect(IP, PORT);
-			s_Xlibrconnect.SendObject(s_Request);
-			s_Xlibrconnect.SendObject(userData);
-		} catch (Exception e) {
-			Log.CRITICAL("Unable to connect to server!");
-			return false;
-		}
+		// Starts a new connection only if it has not connected to the server in current session
+		if (!XLibrConnect.HadConnection())
+			s_Xlibrconnect = new XLibrConnect(IP, PORT);
+
+		s_Xlibrconnect.SendObject(s_Request);
+		s_Xlibrconnect.SendObject(userData);
+
 
 		ListenerThread listener = new ListenerThread();
 		listener.start();
@@ -239,7 +243,6 @@ public class XLibrController {
 
 		Log.INFO(userData.toString());
 
-
 		try {
 			if (!XLibrConnect.HadConnection())
 				s_Xlibrconnect = new XLibrConnect(IP, PORT);
@@ -258,9 +261,16 @@ public class XLibrController {
 
 	@FXML
 	private void BorrowBook(ActionEvent actionEvent) {
-		BookData selectedBook = booksTable.getSelectionModel().getSelectedItem();
+		// Add book to user's library
+		BookData selectedBook = new BookData();
+		try {
+			selectedBook = booksTable.getSelectionModel().getSelectedItem();
+		} catch (Exception e) {
+			Log.WARN("There was no selection!");
+		}
 		Log.INFO(selectedBook.toString());
 
+		// Sends required data to the server
 		s_Request.value = BORROW;
 		s_Xlibrconnect.SendObject(s_Request);
 		s_Xlibrconnect.SendObject(selectedBook.getId());

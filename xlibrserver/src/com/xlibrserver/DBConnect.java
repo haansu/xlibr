@@ -23,6 +23,7 @@ public class DBConnect implements Serializable {
 		s_PreparedStatement = null;
 		s_ResultSet = null;
 
+		// Connects to the database
 		try {
 			s_Connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/xlibr","root","H!vxtK2zzL^#Ps_9");
 		} catch (SQLException e) {
@@ -32,12 +33,14 @@ public class DBConnect implements Serializable {
 
 	public static boolean Login(String _username, String _password) {
 		try {
+			// Selects all users that match username and password
 			String statement = "SELECT * FROM user_data WHERE user_name='" + _username + "' AND pass_word='" + _password +"'";
 			s_PreparedStatement = s_Connection.prepareStatement(statement);
 			s_ResultSet = s_PreparedStatement.executeQuery();
 
 			int count = 0;
 			while(s_ResultSet.next()) {
+				// Saves user id for further processing
 				userID = s_ResultSet.getInt(1);
 				XLibrconnect.s_UserRole = s_ResultSet.getInt("user_role");
 				count++;
@@ -45,6 +48,7 @@ public class DBConnect implements Serializable {
 			Log.getInstance();
 			Log.INFO("There are " + count + " users that mach the received data");
 
+			// If there is only one user that matches (which there should be if the user has registered) returns a confirmation
 			if (count == 1) {
 				return true;
 			}
@@ -57,6 +61,7 @@ public class DBConnect implements Serializable {
 
 	public static boolean Signup(UserData _user) {
 		try {
+			// Checks if the user exists in the database
 			String statement = "SELECT * FROM user_data WHERE user_name='" + _user.getUsername() + "' OR email='" + _user.getEmail() + "'";
 			s_PreparedStatement = s_Connection.prepareStatement(statement);
 			s_ResultSet = s_PreparedStatement.executeQuery();
@@ -70,12 +75,14 @@ public class DBConnect implements Serializable {
 			if (count > 0)
 				return false;
 			else {
+				// If there isn't a user that matches a new user will be inserted
 				String insert = "INSERT INTO user_data (user_name, first_name, last_name, email, address, pass_word, user_role)" +
 						"VALUES (\"" + _user.getUsername()  + "\", " + "\"" + _user.getFirstname()  + "\", " + "\"" + _user.getLastname()  + "\", " + "\"" + _user.getEmail()  + "\", " + "\"" + _user.getAddress()  + "\", " + "\"" + _user.getPassword()  + "\", " +  0  + ");";
 
 				s_Statement = s_Connection.createStatement();
 				s_Statement.executeUpdate(insert);
 
+				// It will be checked for user id
 				String userid = "SELECT * FROM user_data WHERE user_name='" + _user.getUsername() + "' AND pass_word='" + _user.getPassword() +"'";
 				s_PreparedStatement = s_Connection.prepareStatement(userid);
 				s_ResultSet = s_PreparedStatement.executeQuery();
@@ -98,6 +105,7 @@ public class DBConnect implements Serializable {
 		BookData book = new BookData();
 
 		try {
+			// Gets all books from the book_data table and returns an array
 			String statement = "SELECT * FROM book_data";
 			s_PreparedStatement = s_Connection.prepareStatement(statement);
 			s_ResultSet = s_PreparedStatement.executeQuery();
@@ -124,6 +132,7 @@ public class DBConnect implements Serializable {
 		BookData book = new BookData();
 
 		try {
+			// Gets all user borrowed books and returns an array
 			Log.WARN("" + userID);
 			String statement = "SELECT * FROM book_data JOIN user_book ON book_data.id=book_id WHERE user_id=" + userID;
 			s_PreparedStatement = s_Connection.prepareStatement(statement);
@@ -147,6 +156,7 @@ public class DBConnect implements Serializable {
 	}
 
 	public static void BorrowBook(int _bookID) {
+		// Adds book to the user_book table
 		String insert = "INSERT INTO user_book (user_id, book_id)" +
 				"VALUES (" + userID + ", " + _bookID +" );";
 
@@ -166,7 +176,6 @@ public class DBConnect implements Serializable {
 	public static void GetBookData() {
 
 	}
-
 
 	public static DBConnect getInstance() {
 		if (s_Instance == null)

@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.util.List;
 
 public class XLibrGlobals {
-
+	// Global data
 	static public int s_UserRole = 0;
 
 	static public XLibrConnect s_Xlibrconnect;

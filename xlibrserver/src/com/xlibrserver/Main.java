@@ -15,11 +15,13 @@ public class Main {
 
 		DBConnect.getInstance();
 
+		// Creates a thread pool
 		ExecutorService executor = Executors.newCachedThreadPool();
 
 		try {
 			XLibrconnect xlibrconnect = new XLibrconnect(PORT);
 			Log.SUCCESS("On-line!");
+			// Every new connection is sumbited to the executor
 			executor.submit(xlibrconnect);
 		} catch (Exception e) {
 			e.printStackTrace();

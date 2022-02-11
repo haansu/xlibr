@@ -49,6 +49,7 @@ public class XLibrApplication extends Application {
 
 	@Override
 	public void stop() {
+		// When client closes correctly the message is sent to the server to terminate the connection on both ends
 		try {
 			Log.INFO("Closing connection!");
 			s_Request.value = CLOSECONNECTION;

@@ -10,6 +10,7 @@ import com.xlibrpkg.UserData;
 import com.xlibrpkg.ClientRequest;
 
 import static com.xlibrpkg.ClientRequest.RequestType.*;
+import static java.lang.Thread.sleep;
 
 public class XLibrconnect implements Runnable {
 
@@ -21,7 +22,7 @@ public class XLibrconnect implements Runnable {
 
 	static public int s_UserRole;
 
-
+	// Constructor
 	XLibrconnect(int _port) {
 		try {
 			serverSocket = new ServerSocket(_port);
@@ -31,6 +32,7 @@ public class XLibrconnect implements Runnable {
 		}
 	}
 
+	// Returns received object from the server
 	public <T> T ReceiveObject() {
 		T receivedObj;
 
@@ -64,17 +66,24 @@ public class XLibrconnect implements Runnable {
 		}
 	}
 
+	// Establishes connection with the client and runs a listener for client requests
 	private void accept() throws IOException {
 		Log.INFO("Waiting for connection");
 
 		while(!Thread.interrupted()) {
 			try {
+				try {
+					sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 
 				socket = serverSocket.accept();
 
 				objOutputStr = new ObjectOutputStream(socket.getOutputStream());
 				objInputStr = new ObjectInputStream(socket.getInputStream());
 
+				// Listener
 				while (socket.isConnected()) {
 					if (!DataRouter(socket)) {
 						Log.SUCCESS("Connection closed!");
@@ -90,6 +99,7 @@ public class XLibrconnect implements Runnable {
 
 	}
 
+	// Routes received data to respective action
 	public boolean DataRouter(Socket socket) {
 		if (socket.isClosed())
 			return false;
@@ -106,15 +116,10 @@ public class XLibrconnect implements Runnable {
 					var receivedData = ReceiveObject();
 					UserData loginData = (UserData) receivedData;
 
-					try {
-						objOutputStr.reset();
-					} catch (IOException e){
-						e.printStackTrace();
-					}
-
 					ClientRequest returnRequest = new ClientRequest();
 					returnRequest.value = LOGIN;
 
+					// Sends back login process result with additional data
 					if (DBConnect.Login(loginData.getUsername(), loginData.getPassword())) {
 						SendObject(returnRequest);
 						SendObject(true);
@@ -135,6 +140,7 @@ public class XLibrconnect implements Runnable {
 					ClientRequest returnRequest = new ClientRequest();
 					returnRequest.value = SIGNUP;
 
+					// Sends back singup process result with additional data
 					if (DBConnect.Signup(signupData)) {
 						SendObject(returnRequest);
 						SendObject(true);
@@ -146,6 +152,7 @@ public class XLibrconnect implements Runnable {
 					break;
 				}
 
+				// Gets database tables and sends required data to the client
 				case TRANSFERBOOKS: {
 					List<BookData> receivedBooks = DBConnect.GetBooks();
 					List<BookData> receivedUserBooks = DBConnect.GetUserBooks();
@@ -159,6 +166,7 @@ public class XLibrconnect implements Runnable {
 					break;
 				}
 
+				// Adds book to the user_book table and sends updated data back
 				case BORROW: {
 					int bookID = ReceiveObject();
 
@@ -175,6 +183,7 @@ public class XLibrconnect implements Runnable {
 					break;
 				}
 
+				// When the client closes correctly the connection can be safely terminated
 				case CLOSECONNECTION: {
 					try {
 						socket.close();

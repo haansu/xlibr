@@ -1,33 +1,28 @@
 package com.xlibrpkg;
 
 import java.io.*;
-import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import static com.xlibrpkg.XLibrGlobals.*;
 
 public class XLibrConnect extends Thread {
-
-	InetAddress ip;
 
 	static public boolean s_Comms = false;
 	static private boolean s_HadConnection = false;
 
 
-	XLibrConnect(String _host, int _port) throws IOException {
-		if (s_Socket == null)
-			s_Socket = new Socket(_host, _port);
-
-		s_HadConnection = true;
-
+	XLibrConnect(String _host, int _port) {
+		// Connects to the server
 		try {
-			ip = InetAddress.getLocalHost();
-		} catch (UnknownHostException e) {
-			Log.ERROR("Unable to get localhost ip address!");
-		}
+			if (s_Socket == null)
+				s_Socket = new Socket(_host, _port);
 
-		s_ObjOutputStr = new ObjectOutputStream(s_Socket.getOutputStream());
-		s_ObjInputStr = new ObjectInputStream(s_Socket.getInputStream());
+			s_HadConnection = true;
+
+			s_ObjOutputStr = new ObjectOutputStream(s_Socket.getOutputStream());
+			s_ObjInputStr = new ObjectInputStream(s_Socket.getInputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		s_Comms = true;
 	}
