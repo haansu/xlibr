@@ -32,11 +32,25 @@
           </Menu>
         </menus>
       </MenuBar>
-      <TabPane layoutX="-29.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fff;" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+      <TabPane fx:id="mainTabPane" layoutX="-29.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fff;" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
         <tabs>
           <Tab style="-fx-background: #fff;" text="My Book">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <ScrollPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <content>
+                                <TableView id="booksTable" fx:id="myBooksTable" prefHeight="546.0" prefWidth="999.0">
+                                    <columns>
+                                        <TableColumn id="c_title" fx:id="m_title" prefWidth="377.0" text="Title" />
+                                        <TableColumn id="c_author" fx:id="m_author" prefWidth="174.0" text="Author" />
+                                        <TableColumn id="c_publisher" fx:id="m_publisher" minWidth="0.0" prefWidth="177.0" text="Publisher" />
+                                        <TableColumn id="c_release_year" fx:id="m_release_year" minWidth="0.0" prefWidth="115.0" text="Released in" />
+                                    </columns>
+                                </TableView>
+                            </content>
+                        </ScrollPane>
+                    </children></AnchorPane>
             </content>
           </Tab>
             <Tab style="-fx-background: #fff;" text="All Books">
@@ -63,22 +77,22 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
             </Tab>
-            <Tab style="-fx-background: #fff;" text="Lent Books">
+            <Tab fx:id="lentBooksTab" style="-fx-background: #fff;" text="Lent Books">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
             </Tab>
-            <Tab style="-fx-background: #fff;" text="Add Book">
+            <Tab fx:id="addBookTab" style="-fx-background: #fff;" text="Add Book">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
             </Tab>
-            <Tab style="-fx-background: #fff;" text="Remove Book">
+            <Tab fx:id="removeBookTab" style="-fx-background: #fff;" text="Remove Book">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
             </Tab>
-            <Tab style="-fx-background: #fff;" text="Manage Users">
+            <Tab fx:id="manageUsersTab" style="-fx-background: #fff;" text="Manage Users">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>

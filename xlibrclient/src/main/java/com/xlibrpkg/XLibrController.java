@@ -8,10 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
@@ -54,7 +51,30 @@ public class XLibrController {
 	public TableColumn<BookData, Integer> c_release_year;
 
 	@FXML
+	private TableView<BookData> myBooksTable;
+
+	@FXML
+	public TableColumn<BookData, String> m_title;
+	@FXML
+	public TableColumn<BookData, String> m_author;
+	@FXML
+	public TableColumn<BookData, String> m_publisher;
+	@FXML
+	public TableColumn<BookData, Integer> m_release_year;
+
+	@FXML
 	private TableView<BookData> booksTable;
+
+	@FXML
+	private TabPane mainTabPane;
+	@FXML
+	private Tab lentBooksTab;
+	@FXML
+	private Tab addBookTab;
+	@FXML
+	private Tab removeBookTab;
+	@FXML
+	private Tab manageUsersTab;
 
 	@FXML
 	public void LoginButton(ActionEvent _actionEvent) {
@@ -124,6 +144,17 @@ public class XLibrController {
 		listener.run();
 
 		controller.DisplayBooks();
+		controller.RemoveAdminTabs();
+	}
+
+	@FXML
+	public void RemoveAdminTabs() {
+		if (s_UserRole == 0) {
+			mainTabPane.getTabs().remove(lentBooksTab);
+			mainTabPane.getTabs().remove(addBookTab);
+			mainTabPane.getTabs().remove(removeBookTab);
+			mainTabPane.getTabs().remove(manageUsersTab);
+		}
 	}
 
 	@FXML
@@ -138,6 +169,17 @@ public class XLibrController {
 			books.add(elem);
 		}
 		booksTable.setItems(books);
+
+		m_title.setCellValueFactory(new PropertyValueFactory<BookData, String>("title"));
+		m_author.setCellValueFactory(new PropertyValueFactory<BookData, String>("author"));
+		m_publisher.setCellValueFactory(new PropertyValueFactory<BookData, String>("publisher"));
+		m_release_year.setCellValueFactory(new PropertyValueFactory<BookData, Integer>("releaseYear"));
+
+		ObservableList<BookData> myBooks = FXCollections.observableArrayList();
+		for (BookData elem : s_MyBooks) {
+			myBooks.add(elem);
+		}
+		myBooksTable.setItems(myBooks);
 	}
 
 	private boolean Login(String _username, String _password) {

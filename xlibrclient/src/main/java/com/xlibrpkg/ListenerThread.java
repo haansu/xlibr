@@ -67,9 +67,15 @@ public class ListenerThread extends Thread {
 			switch (req.value) {
 				case LOGIN: {
 					boolean allow = ReceiveObject();
-					if (allow)
+					if (allow) {
+						s_UserRole = ReceiveObject();
+						if (s_UserRole == 1) {
+							Log.NOTE("An admin has connected!");
+						} else if(s_UserRole == 0) {
+							Log.NOTE("An user has connected!");
+						}
 						allowLogin = true;
-					else
+					} else
 						allowLogin = false;
 
 					break;
@@ -87,10 +93,10 @@ public class ListenerThread extends Thread {
 
 				case TRANSFERBOOKS:
 					s_BookList = ReceiveObject();
-					//XLibrController.DisplayBooks();
-					for (BookData elem : s_BookList) {
-						Log.WARN(elem.toString());
-					}
+					Log.NOTE("Received list of all books");
+
+					s_MyBooks = ReceiveObject();
+					Log.NOTE("Received list of user's books");
 					break;
 			}
 

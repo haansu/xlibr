@@ -10,11 +10,14 @@ import java.util.List;
 
 public class XLibrGlobals {
 
+	static public int s_UserRole = 0;
+
 	static public XLibrConnect s_Xlibrconnect;
 	static public ClientRequest s_Request;
 	static public boolean allowLogin = false;
 	static public boolean allowSignup = false;
 	static public List<BookData> s_BookList;
+	static public List<BookData> s_MyBooks;
 
 	static public String IP = "192.168.0.174";
 	static public int PORT = 23313;

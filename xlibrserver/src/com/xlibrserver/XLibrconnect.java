@@ -4,7 +4,6 @@ import java.io.*;
 import java.net.*;
 import java.util.List;
 
-import com.mysql.cj.xdevapi.Client;
 import com.xlibrpkg.BookData;
 import com.xlibrpkg.Log;
 import com.xlibrpkg.UserData;
@@ -26,6 +25,8 @@ public class XLibrconnect implements Runnable {
 	ObjectOutputStream	objOutputStr;
 
 	private boolean kill = false;
+
+	static public int s_UserRole;
 
 
 	XLibrconnect(int _port) {
@@ -124,6 +125,7 @@ public class XLibrconnect implements Runnable {
 					if (DBConnect.Login(loginData.getUsername(), loginData.getPassword())) {
 						SendObject(returnRequest);
 						SendObject(true);
+						SendObject(s_UserRole);
 					} else {
 						SendObject(returnRequest);
 						SendObject(false);
@@ -153,12 +155,14 @@ public class XLibrconnect implements Runnable {
 
 				case TRANSFERBOOKS: {
 					List<BookData> receivedBooks = DBConnect.GetBooks();
+					List<BookData> receivedUserBooks = DBConnect.GetUserBooks();
 
 					ClientRequest returnRequest = new ClientRequest();
 					returnRequest.value = TRANSFERBOOKS;
 
 					SendObject(returnRequest);
 					SendObject(receivedBooks);
+					SendObject(receivedUserBooks);
 					break;
 				}
 
