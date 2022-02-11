@@ -1,19 +1,13 @@
 package com.xlibrpkg;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import jakarta.xml.bind.DatatypeConverter;
-
-import java.net.URL;
 import java.security.MessageDigest;
-import java.util.Objects;
-import java.util.ResourceBundle;
 
 import static com.xlibrpkg.ClientRequest.RequestType.*;
 import static com.xlibrpkg.XLibrGlobals.*;

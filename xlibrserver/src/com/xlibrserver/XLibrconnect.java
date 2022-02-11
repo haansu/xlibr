@@ -15,16 +15,9 @@ public class XLibrconnect implements Runnable {
 
 	ServerSocket		serverSocket;
 	Socket				socket;
-	InputStreamReader	inputStrRd;
-	BufferedReader		buffReader;
-
-	String				buffPrint;
-	PrintWriter			printWr;
 
 	ObjectInputStream	objInputStr;
 	ObjectOutputStream	objOutputStr;
-
-	private boolean kill = false;
 
 	static public int s_UserRole;
 
@@ -166,11 +159,25 @@ public class XLibrconnect implements Runnable {
 					break;
 				}
 
+				case BORROW: {
+					int bookID = ReceiveObject();
+
+					DBConnect.BorrowBook(bookID);
+
+					ClientRequest returnRequest = new ClientRequest();
+					returnRequest.value = BORROW;
+
+					List<BookData> receivedUserBooks = DBConnect.GetUserBooks();
+
+					SendObject(returnRequest);
+					SendObject(receivedUserBooks);
+
+					break;
+				}
+
 				case CLOSECONNECTION: {
-					kill = true;
 					try {
 						socket.close();
-
 					} catch	(IOException e) {
 						e.printStackTrace();
 					}

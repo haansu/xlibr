@@ -9,11 +9,16 @@ public class ListenerThread extends Thread {
 
 	public boolean exit = false;
 
-	public void run() {
+	@Override
+	public void start() {
+		execute();
+	}
+
+	public void execute() {
 		Log.getInstance();
 		Log.INFO("Thread running");
 
-		while (XLibrConnect.s_Comms == true) {
+		while (XLibrConnect.s_Comms) {
 			if (exit)
 				return;
 
@@ -63,7 +68,7 @@ public class ListenerThread extends Thread {
 
 		var receivedRequest = ReceiveObject();
 		if (receivedRequest instanceof ClientRequest) {
-			ClientRequest req = (ClientRequest) receivedRequest;
+			var req = (ClientRequest) receivedRequest;
 			switch (req.value) {
 				case LOGIN: {
 					boolean allow = ReceiveObject();
@@ -74,20 +79,15 @@ public class ListenerThread extends Thread {
 						} else if(s_UserRole == 0) {
 							Log.NOTE("An user has connected!");
 						}
-						allowLogin = true;
-					} else
-						allowLogin = false;
+					}
+					allowLogin = allow;
 
 					break;
 				}
 
 				case SIGNUP: {
 					boolean allow = ReceiveObject();
-					if (allow)
-						allowSignup = true;
-					else
-						allowSignup = false;
-
+					allowSignup = allow;
 					break;
 				}
 
@@ -98,6 +98,12 @@ public class ListenerThread extends Thread {
 					s_MyBooks = ReceiveObject();
 					Log.NOTE("Received list of user's books");
 					break;
+
+				case BORROW: {
+					s_MyBooks = ReceiveObject();
+					Log.NOTE("Received list of user's books");
+					break;
+				}
 			}
 
 		}

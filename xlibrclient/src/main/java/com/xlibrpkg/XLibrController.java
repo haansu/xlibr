@@ -5,21 +5,20 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.net.URL;
+import java.io.IOException;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 import static com.xlibrpkg.ClientRequest.RequestType.*;
 import static com.xlibrpkg.XLibrGlobals.*;
-import static java.lang.Thread.sleep;
 
 public class XLibrController {
+
+	XLibrController controller;
 
 	@FXML
 	private TextField usernameField;
@@ -130,7 +129,7 @@ public class XLibrController {
 	private void OpenMainStage() throws Exception {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("main-view.fxml"));
 		Parent root = loader.load();
-		XLibrController controller = loader.getController();
+		controller = loader.getController();
 		XLibrApplication.mainStage.setResizable(true);
 		XLibrApplication.mainStage.setTitle("XLibr");
 		XLibrApplication.mainStage.setMinWidth(1000);
@@ -141,7 +140,7 @@ public class XLibrController {
 		s_Xlibrconnect.SendObject(s_Request);
 
 		ListenerThread listener = new ListenerThread();
-		listener.run();
+		listener.start();
 
 		controller.DisplayBooks();
 		controller.RemoveAdminTabs();
@@ -159,26 +158,31 @@ public class XLibrController {
 
 	@FXML
 	public void DisplayBooks() {
-		c_title.setCellValueFactory(new PropertyValueFactory<BookData, String>("title"));
-		c_author.setCellValueFactory(new PropertyValueFactory<BookData, String>("author"));
-		c_publisher.setCellValueFactory(new PropertyValueFactory<BookData, String>("publisher"));
-		c_release_year.setCellValueFactory(new PropertyValueFactory<BookData, Integer>("releaseYear"));
+		c_title.setCellValueFactory(new PropertyValueFactory<>("title"));
+		c_author.setCellValueFactory(new PropertyValueFactory<>("author"));
+		c_publisher.setCellValueFactory(new PropertyValueFactory<>("publisher"));
+		c_release_year.setCellValueFactory(new PropertyValueFactory<>("releaseYear"));
 
 		ObservableList<BookData> books = FXCollections.observableArrayList();
-		for (BookData elem : s_BookList) {
-			books.add(elem);
-		}
+		books.addAll(s_BookList);
+
 		booksTable.setItems(books);
 
-		m_title.setCellValueFactory(new PropertyValueFactory<BookData, String>("title"));
-		m_author.setCellValueFactory(new PropertyValueFactory<BookData, String>("author"));
-		m_publisher.setCellValueFactory(new PropertyValueFactory<BookData, String>("publisher"));
-		m_release_year.setCellValueFactory(new PropertyValueFactory<BookData, Integer>("releaseYear"));
+		m_title.setCellValueFactory(new PropertyValueFactory<>("title"));
+		m_author.setCellValueFactory(new PropertyValueFactory<>("author"));
+		m_publisher.setCellValueFactory(new PropertyValueFactory<>("publisher"));
+		m_release_year.setCellValueFactory(new PropertyValueFactory<>("releaseYear"));
 
 		ObservableList<BookData> myBooks = FXCollections.observableArrayList();
-		for (BookData elem : s_MyBooks) {
-			myBooks.add(elem);
-		}
+		myBooks.addAll(s_MyBooks);
+
+		myBooksTable.setItems(myBooks);
+	}
+
+	@FXML
+	public void RefreshMyBooks(BookData _book) {
+		ObservableList<BookData> myBooks = myBooksTable.getItems();
+		myBooks.add(_book);
 		myBooksTable.setItems(myBooks);
 	}
 
@@ -200,7 +204,7 @@ public class XLibrController {
 		Log.INFO(userData.toString());
 
 		try {
-			if (!s_Xlibrconnect.HadConnection())
+			if (!XLibrConnect.HadConnection())
 				s_Xlibrconnect = new XLibrConnect(IP, PORT);
 			s_Xlibrconnect.SendObject(s_Request);
 			s_Xlibrconnect.SendObject(userData);
@@ -210,7 +214,7 @@ public class XLibrController {
 		}
 
 		ListenerThread listener = new ListenerThread();
-		listener.run();
+		listener.start();
 
 		return allowLogin;
 	}
@@ -237,7 +241,7 @@ public class XLibrController {
 
 
 		try {
-			if (!s_Xlibrconnect.HadConnection())
+			if (!XLibrConnect.HadConnection())
 				s_Xlibrconnect = new XLibrConnect(IP, PORT);
 			s_Xlibrconnect.SendObject(s_Request);
 			s_Xlibrconnect.SendObject(userData);
@@ -247,8 +251,20 @@ public class XLibrController {
 		}
 
 		ListenerThread listener = new ListenerThread();
-		listener.run();
+		listener.start();
 
 		return allowSignup;
+	}
+
+	@FXML
+	private void BorrowBook(ActionEvent actionEvent) {
+		BookData selectedBook = booksTable.getSelectionModel().getSelectedItem();
+		Log.INFO(selectedBook.toString());
+
+		s_Request.value = BORROW;
+		s_Xlibrconnect.SendObject(s_Request);
+		s_Xlibrconnect.SendObject(selectedBook.getId());
+
+		RefreshMyBooks(selectedBook);
 	}
 }

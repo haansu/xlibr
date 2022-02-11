@@ -16,7 +16,7 @@ public class DBConnect implements Serializable {
 	private static PreparedStatement s_PreparedStatement;
 	private static ResultSet s_ResultSet;
 	private static Statement s_Statement;
-	private static int UserID;
+	private static int userID;
 
 	private DBConnect() {
 		s_Connection = null;
@@ -38,7 +38,7 @@ public class DBConnect implements Serializable {
 
 			int count = 0;
 			while(s_ResultSet.next()) {
-				UserID = s_ResultSet.getInt(1);
+				userID = s_ResultSet.getInt(1);
 				XLibrconnect.s_UserRole = s_ResultSet.getInt("user_role");
 				count++;
 			}
@@ -81,7 +81,7 @@ public class DBConnect implements Serializable {
 				s_ResultSet = s_PreparedStatement.executeQuery();
 
 				while(s_ResultSet.next()) {
-					UserID = s_ResultSet.getInt(1);
+					userID = s_ResultSet.getInt(1);
 				}
 
 				return true;
@@ -124,8 +124,8 @@ public class DBConnect implements Serializable {
 		BookData book = new BookData();
 
 		try {
-			Log.WARN("" + UserID);
-			String statement = "SELECT * FROM book_data JOIN user_book ON book_data.id=book_id WHERE user_id=" + UserID;
+			Log.WARN("" + userID);
+			String statement = "SELECT * FROM book_data JOIN user_book ON book_data.id=book_id WHERE user_id=" + userID;
 			s_PreparedStatement = s_Connection.prepareStatement(statement);
 			s_ResultSet = s_PreparedStatement.executeQuery();
 
@@ -144,6 +144,19 @@ public class DBConnect implements Serializable {
 		}
 
 		return bookList;
+	}
+
+	public static void BorrowBook(int _bookID) {
+		String insert = "INSERT INTO user_book (user_id, book_id)" +
+				"VALUES (" + userID + ", " + _bookID +" );";
+
+		try {
+			s_Statement = s_Connection.createStatement();
+			s_Statement.executeUpdate(insert);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public static void AddBook() {

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -38,18 +38,14 @@
             <content>
                 <AnchorPane minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
-                        <ScrollPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <content>
-                                <TableView id="booksTable" fx:id="myBooksTable" prefHeight="546.0" prefWidth="999.0">
-                                    <columns>
-                                        <TableColumn id="c_title" fx:id="m_title" prefWidth="377.0" text="Title" />
-                                        <TableColumn id="c_author" fx:id="m_author" prefWidth="174.0" text="Author" />
-                                        <TableColumn id="c_publisher" fx:id="m_publisher" minWidth="0.0" prefWidth="177.0" text="Publisher" />
-                                        <TableColumn id="c_release_year" fx:id="m_release_year" minWidth="0.0" prefWidth="115.0" text="Released in" />
-                                    </columns>
-                                </TableView>
-                            </content>
-                        </ScrollPane>
+                          <TableView id="myBooksTable" fx:id="myBooksTable" prefHeight="546.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <columns>
+                                  <TableColumn id="m_title" fx:id="m_title" prefWidth="377.0" text="Title" />
+                                  <TableColumn id="m_author" fx:id="m_author" prefWidth="174.0" text="Author" />
+                                  <TableColumn id="m_publisher" fx:id="m_publisher" minWidth="0.0" prefWidth="177.0" text="Publisher" />
+                                  <TableColumn id="m_release_year" fx:id="m_release_year" minWidth="0.0" prefWidth="115.0" text="Released in" />
+                              </columns>
+                          </TableView>
                     </children></AnchorPane>
             </content>
           </Tab>
@@ -57,18 +53,15 @@
                <content>
                   <AnchorPane minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ScrollPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <content>
-                              <TableView id="booksTable" fx:id="booksTable" prefHeight="546.0" prefWidth="999.0">
-                                <columns>
-                                  <TableColumn id="c_title" fx:id="c_title" prefWidth="377.0" text="Title" />
-                                  <TableColumn id="c_author" fx:id="c_author" prefWidth="174.0" text="Author" />
-                                    <TableColumn id="c_publisher" fx:id="c_publisher" minWidth="0.0" prefWidth="177.0" text="Publisher" />
-                                    <TableColumn id="c_release_year" fx:id="c_release_year" minWidth="0.0" prefWidth="115.0" text="Released in" />
-                                </columns>
-                              </TableView>
-                           </content>
-                        </ScrollPane>
+                        <TableView id="booksTable" fx:id="booksTable" prefHeight="546.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columns>
+                            <TableColumn id="c_title" fx:id="c_title" prefWidth="377.0" text="Title" />
+                            <TableColumn id="c_author" fx:id="c_author" prefWidth="174.0" text="Author" />
+                              <TableColumn id="c_publisher" fx:id="c_publisher" minWidth="0.0" prefWidth="177.0" text="Publisher" />
+                              <TableColumn id="c_release_year" fx:id="c_release_year" minWidth="0.0" prefWidth="115.0" text="Released in" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="BorrowBook" mnemonicParsing="false" onAction="#BorrowBook" text="Borrow Book" />
                      </children></AnchorPane>
                </content>
             </Tab>
