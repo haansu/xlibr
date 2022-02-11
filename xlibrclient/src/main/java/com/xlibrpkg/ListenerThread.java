@@ -5,10 +5,11 @@ import java.net.Socket;
 
 import static com.xlibrpkg.XLibrGlobals.*;
 
-public class Listener {
+public class ListenerThread extends Thread {
 
 	public boolean exit = false;
 
+	@Override
 	public void start() {
 		execute();
 	}
@@ -104,6 +105,12 @@ public class Listener {
 				case BORROW: {
 					s_MyBooks = ReceiveObject();
 					Log.NOTE("Received list of user's books");
+					break;
+				}
+
+				case ADDBOOK: {
+					s_BookList = ReceiveObject();
+					Log.NOTE("Received list of all books");
 					break;
 				}
 			}

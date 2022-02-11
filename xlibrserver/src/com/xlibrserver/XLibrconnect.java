@@ -184,6 +184,21 @@ public class XLibrconnect implements Runnable {
 					break;
 				}
 
+				case ADDBOOK: {
+					BookData book = ReceiveObject();
+					DBConnect.AddBook(book);
+
+					List<BookData> receivedBooks = DBConnect.GetBooks();
+
+					ClientRequest returnRequest = new ClientRequest();
+					returnRequest.value = ADDBOOK;
+
+					SendObject(returnRequest);
+					SendObject(receivedBooks);
+
+					break;
+				}
+
 				// When the client closes correctly the connection can be safely terminated
 				case CLOSECONNECTION: {
 					try {

@@ -7,6 +7,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import jakarta.xml.bind.DatatypeConverter;
+
+import java.io.IOException;
+import java.net.Socket;
 import java.security.MessageDigest;
 
 import static com.xlibrpkg.ClientRequest.RequestType.*;
@@ -34,6 +37,9 @@ public class XLibrApplication extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		Connect con = new Connect();
+		con.start();
+
 		Log.getInstance();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("login-view.fxml"));
 		Parent root = loader.load();

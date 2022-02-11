@@ -169,8 +169,16 @@ public class DBConnect implements Serializable {
 
 	}
 
-	public static void AddBook() {
+	public static void AddBook(BookData _book) {
+		String insert = "INSERT INTO book_data (title, author, publisher, synopsis, release_year)" +
+				"VALUES (\"" + _book.getTitle() + "\", \"" + _book.getAuthor() + "\", \"" + _book.getPublisher() + "\", \"" + _book.getSynopsis() + "\", " + _book.getReleaseYear() + ");";
 
+		try {
+			s_Statement = s_Connection.createStatement();
+			s_Statement.executeUpdate(insert);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void GetBookData() {

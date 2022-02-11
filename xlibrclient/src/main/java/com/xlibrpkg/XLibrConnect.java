@@ -16,9 +16,6 @@ public class XLibrConnect extends Thread {
 	XLibrConnect(String _host, int _port) {
 		// Connects to the server
 		try {
-			if (s_Socket == null)
-				s_Socket = new Socket(_host, _port);
-
 			s_HadConnection = true;
 
 			s_ObjOutputStr = new ObjectOutputStream(s_Socket.getOutputStream());

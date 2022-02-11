@@ -6,7 +6,7 @@ public class ClientRequest implements Serializable {
 
 	public enum RequestType{
 		LOGIN, SIGNUP, CLOSECONNECTION,
-		TRANSFERBOOKS, BORROW
+		TRANSFERBOOKS, BORROW, ADDBOOK
 	}
 
 	public RequestType value;

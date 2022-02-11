@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 
 import java.util.Objects;
 
@@ -73,6 +74,22 @@ public class XLibrController {
 	private Tab removeBookTab;
 	@FXML
 	private Tab manageUsersTab;
+
+	@FXML
+	private TextField add_book_title;
+	@FXML
+	private TextField add_book_author;
+	@FXML
+	private TextField add_book_publisher;
+	@FXML
+	private TextField add_book_synopsis;
+	@FXML
+	private TextField add_book_release;
+	@FXML
+	private Text add_book_text;
+	@FXML
+	private Button add_book_button;
+
 
 	@FXML
 	public void LoginButton(ActionEvent _actionEvent) {
@@ -144,7 +161,7 @@ public class XLibrController {
 		s_Xlibrconnect.SendObject(s_Request);
 
 		// Started listener to listen to commands from the server
-		Listener listener = new Listener();
+		ListenerThread listener = new ListenerThread();
 		listener.start();
 
 		// Don't know why, but it works!
@@ -193,6 +210,14 @@ public class XLibrController {
 		myBooksTable.setItems(myBooks);
 	}
 
+	@FXML
+	public void RefreshBooks() {
+		ObservableList<BookData> books = booksTable.getItems();
+		books.clear();
+		books.addAll(s_BookList);
+		myBooksTable.setItems(books);
+	}
+
 	private boolean Login(String _username, String _password) {
 		if (_username.equals("") || _password.equals(""))
 			return false;
@@ -218,7 +243,7 @@ public class XLibrController {
 		s_Xlibrconnect.SendObject(s_Request);
 		s_Xlibrconnect.SendObject(userData);
 
-		Listener listener = new Listener();
+		ListenerThread listener = new ListenerThread();
 		listener.start();
 
 
@@ -256,14 +281,14 @@ public class XLibrController {
 			return false;
 		}
 
-		Listener listener = new Listener();
+		ListenerThread listener = new ListenerThread();
 		listener.start();
 
 		return allowSignup;
 	}
 
 	@FXML
-	private void BorrowBook(ActionEvent actionEvent) {
+	private void BorrowBook(ActionEvent _actionEvent) {
 		// Add book to user's library
 		BookData selectedBook = new BookData();
 		try {
@@ -278,9 +303,31 @@ public class XLibrController {
 		s_Xlibrconnect.SendObject(s_Request);
 		s_Xlibrconnect.SendObject(selectedBook.getId());
 
-		Listener listener = new Listener();
+		ListenerThread listener = new ListenerThread();
 		listener.start();
 
 		RefreshMyBooks();
+	}
+
+	@FXML
+	public void AddBook(ActionEvent _actionEvent) {
+		BookData book = new BookData();
+		book.setTitle(add_book_title.getText());
+		book.setAuthor(add_book_author.getText());
+		book.setPublisher(add_book_publisher.getText());
+		book.setSynopsis(add_book_synopsis.getText());
+		book.setReleaseYear(Integer.parseInt(add_book_release.getText()));
+
+		s_Request.value = ADDBOOK;
+		s_Xlibrconnect.SendObject(s_Request);
+		s_Xlibrconnect.SendObject(book);
+
+		ListenerThread listener = new ListenerThread();
+		listener.start();
+
+		RefreshBooks();
+
+		add_book_text.setText("Book Added");
+		Log.NOTE("Book Added");
 	}
 }

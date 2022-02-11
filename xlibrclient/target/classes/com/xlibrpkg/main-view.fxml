@@ -8,7 +8,10 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.xlibrpkg.XLibrController">
    <children>
@@ -77,7 +80,20 @@
             </Tab>
             <Tab fx:id="addBookTab" style="-fx-background: #fff;" text="Add Book">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="add_book_title" layoutX="51.0" layoutY="57.0" promptText="Title" />
+                        <TextField fx:id="add_book_author" layoutX="251.0" layoutY="57.0" promptText="Author" />
+                        <TextField fx:id="add_book_publisher" layoutX="459.0" layoutY="57.0" promptText="Publisher" />
+                        <TextField fx:id="add_book_synopsis" alignment="TOP_LEFT" layoutX="51.0" layoutY="98.0" prefHeight="200.0" prefWidth="765.0" promptText="Synopsis" />
+                        <TextField fx:id="add_book_release" layoutX="666.0" layoutY="57.0" promptText="Released in" />
+                        <Button fx:id="add_book_button" layoutX="683.0" layoutY="314.0" mnemonicParsing="false" onAction="#AddBook" prefHeight="49.0" prefWidth="132.0" text="Add Book" />
+                        <Text fx:id="add_book_text" layoutX="292.0" layoutY="353.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Text>
+                     </children></AnchorPane>
                </content>
             </Tab>
             <Tab fx:id="removeBookTab" style="-fx-background: #fff;" text="Remove Book">
